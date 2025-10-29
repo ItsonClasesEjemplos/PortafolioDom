@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script defer type="module" src="./script.js"></script>
+    <title>Repositorio</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Portafolio de proyectos</h1>
+    </header>
+    <main>
+        <aside>
+            <h2>Agregar proyecto</h2>
+            <form id="formProyecto">
+                <div class="formProyecto__element">
+                    <label for="name">Nombre</label>
+                    <input id="name" name="name" type="text">
+                </div>
+                <div class="formProyecto__element">
+                    <label for="description">Descripcion</label>
+                    <input id="description" name="description" type="text">
+                </div>
+                <div class="formProyecto__element">
+                    <label for="tecnologies">Tecnologias</label>
+                    <textarea id="tecnologies" name="tecnologies"></textarea>
+                </div>
+                <div class="formProyecto__element">
+                    <label for="contributors">Coolaboradores</label>
+                    <textarea id="contributors" name="contributors"></textarea>
+                </div>
+                <div class="formProyecto__element">
+                    <label for="repository">Repositorio</label>
+                    <input id="repository" name="repository" type="text">
+                </div>
+                <div class="formProyecto__button">
+                    <button type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form> 
+        </aside>
+        <section>
+            <h2>Proyectos</h2>
+            <div class="projects__container">
+
+                <!-- Plantilla proyecto -->
+                <!-- <div id="{idProyecto}-project" class="project">
+                    <h3>{Nombre del proyecto}</h3>
+                    <p>{Descripcion}</p>
+                    <p><strong>Tecnologias</strong></p>
+                    <div class="projects__section">
+                        <ul>
+                            <li>{Tecnologia 1}</li>
+                            <li>{Tecnologia 2}</li>
+                            <li>...</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <p><strong>Coolaboradores</strong></p>
+                     <div class="projects__section">
+                        <ul>
+                            <li>{Coolaborador 1}</li>
+                            <li>{Coolaborador 2}</li>
+                            <li>...</li>
+                        </ul>
+                    </div>
+                    <div>
+                        Puedes encontrar el repositorio en {repositorio}
+                    </div>
+                </div> -->
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
