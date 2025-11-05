@@ -4,15 +4,18 @@ const formulario = document.getElementById('formProyecto');
 formulario.addEventListener('submit', createProyecto);
 
 const servicio = new PortafolioService();
+let updateMode = false;
+let updatingProyect = 0;
 
 function refresh(){
     const container = document.getElementById("projects__container");
     container.innerHTML = ``;
     const projects = servicio.getProyectos();
     projects.forEach(e => {
+        const projectId = `${e.id}`;
         const proyectoElemento = document.createElement("div")
         proyectoElemento.classList.add("project")
-        proyectoElemento.id = `${e.id}-project`
+        proyectoElemento.id = projectId;
         const titleProject = document.createElement("h3")
         titleProject.innerText = `${e.nombre}`;
         proyectoElemento.appendChild(titleProject);
@@ -66,9 +69,65 @@ function refresh(){
         repo.appendChild(textRepo);
         proyectoElemento.appendChild(repo)
 
+        //Adding delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.id = `btn-delete-${projectId}`
+        deleteButton.className = "btn";
+        deleteButton.textContent = "Eliminar"
+        deleteButton.addEventListener("click", ()=>{
+            servicio.eliminarProyecto(projectId);
+            refresh();
+        })
+        proyectoElemento.appendChild(deleteButton);
+
+        //add update button
+        const updateButton = document.createElement("button");
+        updateButton.id = `btn-update-${projectId}`
+        updateButton.className = "btn";
+        updateButton.textContent = "Actualizar"
+        updateButton.addEventListener("click", ()=>{
+            updateMode = true;
+            updatingProyect = projectId
+            const nameProject = document.getElementById("name");
+            nameProject.value = e.nombre
+            const descriptionProject = document.getElementById("description");
+            descriptionProject.value = e.nombre
+            const repositoryProject = document.getElementById("repository");
+            repositoryProject.value = e.nombre
+            const tecsProject = document.getElementById("tecnologies");
+            tecsProject.value = e.tecnologias.join("\n")
+            const colsProject = document.getElementById("contributors");
+            colsProject.value = e.coolaboradores.join("\n")
+            turnOnUpdatingMode()
+        })
+        proyectoElemento.appendChild(updateButton);
+
         container.appendChild(proyectoElemento);
     });
+}
 
+function turnOnUpdatingMode(){
+    const formButtons = document.getElementById("form-buttons");
+    const title = document.getElementById("form-title");
+    title.textContent = "Editar proyecto"
+    const cancelButton = document.createElement("button");
+    cancelButton.id = "btn-cancel"
+    cancelButton.textContent = "Cancelar";
+    formButtons.appendChild(cancelButton);
+    cancelButton.addEventListener("click", (event)=>{
+        event.preventDefault();
+        turnOffUpdatingMode()
+    })
+}
+
+function turnOffUpdatingMode(){
+    updateMode = false;
+    updatingProyect = 0;
+    const title = document.getElementById("form-title");
+    title.textContent = "Agregar proyecto";
+    const cancelButton = document.getElementById("btn-cancel");
+    cancelButton.remove();
+    document.getElementById("formProyecto").reset()
 }
 
 function createProyecto(event)
@@ -87,13 +146,18 @@ function createProyecto(event)
         coolaborators,
         event.target['repository'].value
     )
+
+    if(updateMode){
+        servicio.actualizarProyecto(updatingProyect, newProyecto);
+        turnOffUpdatingMode();
+    }else{
+        servicio.guardarProyecto(newProyecto);
+    }
     
-    servicio.guardarProyecto(newProyecto);
     
     refresh();
 
     const formulario = document.getElementById("formProyecto");
     formulario.reset();
-    // Separar tecnologias del miltiline por linea
-    // const multiline = multilineInput.split('\n');
 }
+

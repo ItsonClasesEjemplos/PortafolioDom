@@ -39,7 +39,7 @@ h2{
 }
 .formProyecto__button{
     display: flex;
-    justify-self: center;
+    justify-content: space-evenly;
 }
 .formProyecto__button button{
     background-color: coral;
@@ -71,4 +71,20 @@ section{
 
 .projects__section{
     padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.btn{
+    background-color: #c0b9e7;
+    border-radius: 15px;
+    border: none;
+    padding: 5px;
+    color: white;
+    font-weight: 700;
+    margin: 0.3rem;
+}
+.btn:hover{
+    transform:scale(1.05)
+}
+.btn:active{
+    transform:scale(1.08)
 }
